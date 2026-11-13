@@ -178,14 +178,15 @@ CodeQuest/
 
 الخادم مرتبط من الصندوق مع أي PaaS يدعم Node سواء `HOST=0.0.0.0` أو منفذ من البيئة.
 
-زر النشر أعلاه يعمل مباشرة فقط إذا كان المستودع عامًا. هذا المستودع **خاص**، لذا أسهل مسار:
+زر النشر أعلاه يعمل مباشرة الآن (المستودع عام). أو يدويًا عبر:
 
-1. اربط Render بحساب GitHub وامنحه الوصول إلى `halul-codequest`.
-2. Render → **New +** → **Blueprint** → اختر `mohnadalqdasy02026/halul-codequest` → **Apply** (يكتشف `render.yaml` تلقائيًا: الخدمة + القرص 1GB + متغيرات البيئة).
-3. عيّن `ADMIN_PASSWORD` للقيمة المطلوبة (غير محفوظة في المستودع) — تُستخدم فقط عند بناء القاعدة من Excel في أول تشغيل فقط.
-4. الافتراضي `CODEQUEST_DB=/var/data/codequest.db` على القرص الثابت `codequest-data`.
-5. عند أول تشغيل يبني `scripts/ensure-db.js` القاعدة من ملف Excel تلقائيًا.
-6. تحقق من: `https://<your-service>.onrender.com` ثم `/admin` بحساب المدير.
+1. Render → **New +** → **Blueprint** → اختر `mohnadalqdasy02026/halul-codequest` → **Apply** (يكتشف `render.yaml` تلقائيًا: الخدمة + القرص 1GB + متغيرات البيئة).
+2. عيّن `ADMIN_PASSWORD` للقيمة المطلوبة (غير محفوظة في المستودع) — تُستخدم فقط عند بناء القاعدة من Excel في أول تشغيل فقط.
+3. الافتراضي `CODEQUEST_DB=/var/data/codequest.db` على القرص الثابت `codequest-data`.
+4. عند أول تشغيل يبني `scripts/ensure-db.js` القاعدة من ملف Excel تلقائيًا.
+5. تحقق من: `https://<your-service>.onrender.com` ثم `/admin` بحساب المدير.
+
+**تجربة مجانية (مؤقتة)**: لتجربة اللعبة على Render بدون كلفة، أنشئ **Web Service** يدويًا بخطة **Free** (بدون قرص) مع `CODEQUEST_DB=/tmp/codequest.db` — لكن الخادم ينام بعد ١٥ دقيقة والتقدم يُفقد عند كل إعادة نشر/تشغيل. للإنتاج القرص الثابت إلزامي.
 
 **عرض Render المجاني لا يسمح بقرص ثابت — لن تُنصح به للعبة متعددة اللاعبين.** للنسخة الإنتاجية استخدم `plan: starter` كما في `render.yaml`.
 
