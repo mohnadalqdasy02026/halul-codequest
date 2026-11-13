@@ -1,0 +1,28 @@
+# Render Blueprint — one-click deploy for CODE QUEST.
+# Prerequisites: a Render account with access to the private repo
+# mohnadalqdasy02026/halul-codequest. Free Web Services cannot attach disks,
+# so the plan below is "starter" — downgrade at your own risk.
+services:
+  - type: web
+    name: halul-codequest
+    runtime: node
+    plan: starter
+    region: frankfurt
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    disk:
+      name: codequest-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: CODEQUEST_DB
+        value: /var/data/codequest.db
+      - key: HOST
+        value: 0.0.0.0
+      # Set a strong password in the Render dashboard on first deploy;
+      # it is used only when the database is built from Excel (once).
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: NODE_VERSION
+        value: 22

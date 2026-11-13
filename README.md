@@ -1,3 +1,5 @@
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mohnadalqdasy02026/halul-codequest)
+
 # CODE QUEST
 
 > من فريق **حلول كود — Halul Code** · تصميم وتطوير: **المهندس مهند القدسي**
@@ -176,19 +178,16 @@ CodeQuest/
 
 الخادم مرتبط من الصندوق مع أي PaaS يدعم Node سواء `HOST=0.0.0.0` أو منفذ من البيئة.
 
-**عروض Render المجانية تفقد البيانات المؤقتة عند كل إعادة نشر — لن يُنصح بلعبة متعددة اللاعبين عليها.**
-للنسخة الإنتاجية المطلوبة لهذه اللعبة:
+زر النشر أعلاه يعمل مباشرة فقط إذا كان المستودع عامًا. هذا المستودع **خاص**، لذا أسهل مسار:
 
-1. **ربط المستودع**: أنشئ Web Service في Render مرتبطًا بمستودع `mohnadalqdasy02026/halul-codequest` (خاص).
-2. **Runtime**: `Node` · **Build Command**: `npm install` (لا توجد اعتماديات) · **Start Command**: `npm start`.
-3. **قرص ثابت (Persistent Disk)**: أضفه mount path `/var/data` وحجم **1 GB** (مدفوع).
-4. **Environment Variables**:
-   - `CODEQUEST_DB=/var/data/codequest.db` — مكان القاعدة على القرص الثابت.
-   - `ADMIN_PASSWORD=<كلمة سر قوية>` — تُستخدم فقط عند البناء الأول للقاعدة.
-   - `HOST=0.0.0.0` (الافتراضي).
-   - `PORT` يُحقنه Render تلقائيًا.
+1. اربط Render بحساب GitHub وامنحه الوصول إلى `halul-codequest`.
+2. Render → **New +** → **Blueprint** → اختر `mohnadalqdasy02026/halul-codequest` → **Apply** (يكتشف `render.yaml` تلقائيًا: الخدمة + القرص 1GB + متغيرات البيئة).
+3. عيّن `ADMIN_PASSWORD` للقيمة المطلوبة (غير محفوظة في المستودع) — تُستخدم فقط عند بناء القاعدة من Excel في أول تشغيل فقط.
+4. الافتراضي `CODEQUEST_DB=/var/data/codequest.db` على القرص الثابت `codequest-data`.
 5. عند أول تشغيل يبني `scripts/ensure-db.js` القاعدة من ملف Excel تلقائيًا.
 6. تحقق من: `https://<your-service>.onrender.com` ثم `/admin` بحساب المدير.
+
+**عرض Render المجاني لا يسمح بقرص ثابت — لن تُنصح به للعبة متعددة اللاعبين.** للنسخة الإنتاجية استخدم `plan: starter` كما في `render.yaml`.
 
 ---
 
