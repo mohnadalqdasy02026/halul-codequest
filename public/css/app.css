@@ -562,10 +562,14 @@ html[data-theme="light"] .drawer-box { background: #fff; }
   .auth-hero { padding: 30px; }
 }
 @media (max-width: 900px) {
-  :root { --sidebar-w: 0px; }
-  .sidebar { transform: translateX(calc(-1 * var(--sidebar-w))); width: 268px; transition: transform .25s; }
-  html[dir="rtl"] .sidebar { transform: translateX(0); }
-  .sidebar.open { transform: translateX(0) !important; }
+  .sidebar {
+    width: 268px;
+    transform: translateX(-268px);
+    transition: transform .25s;
+    visibility: hidden;
+  }
+  html[dir="rtl"] .sidebar { transform: translateX(268px); }
+  .sidebar.open { transform: translateX(0) !important; visibility: visible; }
   .main-wrap { margin-inline-start: 0; }
   .menu-btn { display: inline-grid; }
   .view { padding-bottom: 96px; }

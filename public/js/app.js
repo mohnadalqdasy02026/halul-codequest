@@ -302,6 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sidebar')?.classList.toggle('open');
   });
 
+  // tap outside the drawer (or press Escape) to close it on mobile
+  document.addEventListener('click', e => {
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar?.classList.contains('open')) return;
+    if (e.target.closest('#sidebar') || e.target.closest('#menu-btn')) return;
+    sidebar.classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('sidebar')?.classList.remove('open');
+  });
+
   // theme
   document.getElementById('theme-toggle')?.addEventListener('click', async () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
