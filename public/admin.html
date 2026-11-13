@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>CODE QUEST — لوحة الإدارة</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#081426" />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/css/app.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="bg-scene" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <div id="admin-gate" class="admin-gate hidden">
+    <div class="gate-card card glow">
+      <div class="row" style="gap:14px;margin-bottom:8px">
+        <img src="/assets/logo.svg" alt="" style="width:56px;height:56px" />
+        <div>
+          <strong style="font-size:1.3rem">CODE<em>QUEST</em></strong>
+          <div class="small muted">لوحة الإدارة · Admin console</div>
+        </div>
+      </div>
+      <div id="gate-message"></div>
+      <form id="gate-form" class="stack" style="gap:12px">
+        <div class="field">
+          <label for="g-user">اسم المستخدم أو البريد</label>
+          <input class="input" id="g-user" dir="ltr" autocomplete="username" required placeholder="admin" />
+        </div>
+        <div class="field">
+          <label for="g-pass">كلمة المرور</label>
+          <input class="input" id="g-pass" type="password" dir="ltr" autocomplete="current-password" required placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" type="submit" id="g-submit">دخول</button>
+      </form>
+      <p class="small muted center" style="margin:14px 0 0">
+        الحساب الافتراضي: <span class="mono">admin</span> / <span class="mono">CodeQuest!2026</span>
+      </p>
+      <a class="btn btn-sm btn-ghost btn-block" href="/" style="margin-top:12px">← العودة إلى اللعبة</a>
+    </div>
+  </div>
+
+  <div id="admin-shell" class="admin-shell hidden">
+    <header class="admin-head">
+      <a class="row" href="/" style="gap:12px">
+        <img src="/assets/logo.svg" alt="" style="width:44px;height:44px" />
+        <span>
+          <strong style="font-size:1.15rem">CODE<em>QUEST</em></strong>
+          <span class="small muted" style="display:block">لوحة الإدارة</span>
+        </span>
+      </a>
+      <div class="spacer"></div>
+      <span class="pill" id="admin-user"></span>
+      <button class="icon-btn" id="admin-theme" title="تبديل المظهر">🌙</button>
+      <a class="btn btn-sm" href="/">← اللعبة</a>
+      <button class="btn btn-sm btn-danger" id="admin-logout">خروج</button>
+    </header>
+
+    <nav class="admin-tabs" id="admin-tabs">
+      <button data-tab="overview">📊 نظرة عامة</button>
+      <button data-tab="terms">📚 المصطلحات</button>
+      <button data-tab="questions">❓ الأسئلة</button>
+      <button data-tab="import">📥 استيراد Excel</button>
+      <button data-tab="export">📤 تصدير</button>
+      <button data-tab="users">👥 المستخدمون</button>
+      <button data-tab="subscriptions">💳 الاشتراكات</button>
+      <button data-tab="settings">⚙️ الإعدادات</button>
+    </nav>
+
+    <main id="admin-view"></main>
+
+    <footer class="small muted center" style="padding:24px 0">
+      CODE QUEST · محتوى اللعبة مبني على قاموس <span class="mono">Programming_Glossary_En_Ar.xlsx</span>
+    </footer>
+  </div>
+
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <div id="modal-root" class="modal-root hidden"></div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

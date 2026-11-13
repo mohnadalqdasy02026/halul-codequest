@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# runtime databases (built from data/source/*.xlsx)
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.db-journal
+data/test-runtime.db*
+data/shot-runtime.db*
+data/debug.db*
+
+# local verification artifacts
+shots/
+test-output.txt
+*.log
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
