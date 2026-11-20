@@ -28,6 +28,7 @@ import {
 import {
   createRoom, currentRoom, joinRoom, leaveRoom, roomInfo, submitAnswer,
 } from './src/multiplayer.js';
+import { packIndex, stagePack } from './src/packs.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC = path.join(__dirname, 'public');
@@ -1155,6 +1156,19 @@ route('POST', '/api/mp/leave', async ctx => {
     room: result.room ? roomInfo(result.room, ctx.user.id) : null,
   });
 }, { auth: true });
+
+// ---------------------------------------------------------------- offline packs
+// The Android app downloads its content from here: one pack per stage.
+// Packs carry answers on purpose — the app plays fully offline afterwards.
+route('GET', '/api/packs/index', async ctx => {
+  return json(ctx.res, 200, { stages: packIndex() });
+}, { auth: false });
+
+route('GET', '/api/packs/stage/:id', async ctx => {
+  const pack = stagePack(Number(ctx.params.id));
+  if (!pack) return fail(ctx.res, 404, 'المرحلة غير موجودة.');
+  return json(ctx.res, 200, pack, { 'Cache-Control': 'public, max-age=3600' });
+}, { auth: false });
 
 // ---------------------------------------------------------------- bootstrap
 route('GET', '/api/bootstrap', async ctx => {
