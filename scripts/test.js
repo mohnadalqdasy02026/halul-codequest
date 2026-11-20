@@ -332,6 +332,12 @@ async function main() {
     const adminSrc = fs.readFileSync(path.join(ROOT, 'public', 'js', 'admin.js'), 'utf8');
     includes(adminPage.buffer?.toString(), 'data-tab="subscriptions"', 'لوحة الإدارة تعرض تبويب الاشتراكات');
     includes(adminSrc, 'renderSubscriptions', 'تبويب الاشتراكات موصول بمنطق العرض');
+    includes(adminSrc, 'سجل الاشتراكات', 'قسم سجل الاشتراكات موجود في لوحة الإدارة');
+    includes(adminSrc, 'sub-request-list', 'طلبات التفعيل تُعرض كبطاقات واضحة');
+    includes(adminSrc, 'data-approve=', 'زر الموافقة موجود في كل طلب');
+    includes(adminSrc, 'data-reject=', 'زر الرفض موجود في كل طلب');
+    const adminCssSrc = fs.readFileSync(path.join(ROOT, 'public', 'css', 'admin.css'), 'utf8');
+    includes(adminCssSrc, '.sub-request', 'تنسيق بطاقات طلبات الاشتراك موجود');
   }
 
   /* ---------------------------------------------------------------- B. auth & security */

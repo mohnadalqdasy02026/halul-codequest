@@ -819,61 +819,35 @@ async function renderSubscriptions() {
       ${kpi('إجمالي التحصيل', `${formatNum(counts.revenue)} ريال`, 'var(--cyan)')}
     </div>
 
-    <div class="admin-cols">
-      <section class="card">
-        <h3 class="section-title"><span class="ico">📝</span> منح اشتراك مباشر</h3>
-        <p class="small muted" style="margin-top:0">
-          استخدمه بعد تأكيد التحويل اليدوي. المتتالية تُمدَّد من نهاية الاشتراك الحالي.
-        </p>
-        <div class="form-grid">
-          <div class="field">
-            <label>المستخدم (اسم المستخدم أو الرقم)</label>
-            <input class="input" id="sub-user" placeholder="username أو 12" />
-          </div>
-          <div class="field">
-            <label>الخطة</label>
-            <select class="select" id="sub-plan">
-              ${plans.map(p => `<option value="${esc(p.id)}">${esc(p.name_ar)} — ${formatNum(p.price_sar)} ريال / ${p.days} يوم</option>`).join('')}
-            </select>
-          </div>
+    <section class="card sub-registry">
+      <div class="sub-section-head">
+        <div>
+          <h3 class="section-title"><span class="ico">📋</span> سجل الاشتراكات</h3>
+          <p class="small muted" style="margin:-6px 0 0">
+            كل الحسابات التي تحتاج تفعيل الاشتراك تظهر هنا باسم المستخدم وأزرار المراجعة.
+          </p>
         </div>
-        <div class="field">
-          <label>ملاحظة (اختياري)</label>
-          <input class="input" id="sub-note" placeholder="رقم التحويل أو المرجع" />
-        </div>
-        <button class="btn btn-primary" id="sub-grant">تفعيل الاشتراك</button>
-      </section>
-
-      <section class="card">
-        <h3 class="section-title"><span class="ico">💳</span> خطط الاشتراك</h3>
-        <div class="table-wrap"><table class="data">
-          <thead><tr><th>الخطة</th><th>السعر</th><th>المدة</th></tr></thead>
-          <tbody>${plans.map(p => `<tr>
-            <td><b>${esc(p.name_ar)}</b><div class="small muted">${esc(p.name_en || '')}</div></td>
-            <td style="color:var(--gold)">${formatNum(p.price_sar)} ريال</td>
-            <td>${p.days} يوم</td>
-          </tr>`).join('')}</tbody>
-        </table></div>
-      </section>
-    </div>
-
-    <section class="card">
-      <h3 class="section-title"><span class="ico">⏳</span> طلبات التفعيل</h3>
-      ${pending.length ? `<div class="table-wrap"><table class="data">
-        <thead><tr><th>اللاعب</th><th>الخطة</th><th>المبلغ</th><th>طريقة الدفع</th><th>المرجع</th><th>الطلب</th><th>إجراءات</th></tr></thead>
-        <tbody>${pending.map(r => `<tr>
-          <td>${userCell(r)}</td>
-          <td><b>${esc(planName(r))}</b><div class="small muted">${r.days} يوم</div></td>
-          <td style="color:var(--gold)">${formatNum(r.amount_sar)} ريال</td>
-          <td class="small">${esc(r.method || '—')}</td>
-          <td class="small mono" dir="ltr">${esc(r.reference || '—')}</td>
-          <td class="small muted">${fmtDate(r.requested_at)}</td>
-          <td class="row-actions">
-            <button class="btn btn-xs btn-primary" data-approve="${r.id}">موافقة</button>
-            <button class="btn btn-xs btn-danger" data-reject="${r.id}">رفض</button>
-          </td>
-        </tr>`).join('')}</tbody>
-      </table></div>` : '<p class="small muted">لا طلبات بانتظار المراجعة.</p>'}
+        <span class="pill gold">${formatNum(counts.pending)} بانتظار</span>
+      </div>
+      ${pending.length ? `<div class="sub-request-list">
+        ${pending.map(r => `<article class="sub-request">
+          <div class="sub-request-main">
+            <div class="sub-user">${userCell(r)}</div>
+            <div class="sub-meta">
+              <span class="pill">${esc(planName(r))}</span>
+              <span class="small muted">طلب #${r.id}</span>
+              <span class="small muted">${formatNum(r.amount_sar)} ريال</span>
+              <span class="small muted">${esc(r.method || '—')}</span>
+              <span class="small mono" dir="ltr">مرجع: ${esc(r.reference || '—')}</span>
+              <span class="small muted">${fmtDate(r.requested_at)}</span>
+            </div>
+          </div>
+          <div class="sub-request-actions">
+            <button class="btn btn-sm btn-primary" data-approve="${r.id}">✓ موافقة</button>
+            <button class="btn btn-sm btn-danger" data-reject="${r.id}">✕ رفض</button>
+          </div>
+        </article>`).join('')}
+      </div>` : `<div class="sub-empty">✅ لا توجد طلبات بانتظار المراجعة حالياً.</div>`}
     </section>
 
     <section class="card">
@@ -895,7 +869,48 @@ async function renderSubscriptions() {
           </tr>`;
         }).join('')}</tbody>
       </table></div>` : '<p class="small muted">لا اشتراكات مسجلة بعد.</p>'}
-    </section>`;
+    </section>
+
+    <details class="card sub-tools">
+      <summary class="section-title"><span class="ico">🛠️</span> أدوات إضافية — منح مباشر وخطط الأسعار</summary>
+      <div class="admin-cols" style="margin-top:14px">
+        <div>
+          <h4 class="small" style="margin:0 0 8px">منح اشتراك مباشر</h4>
+          <p class="small muted" style="margin-top:0">
+            استخدمه بعد تأكيد التحويل اليدوي. المتتالية تُمدَّد من نهاية الاشتراك الحالي.
+          </p>
+          <div class="form-grid">
+            <div class="field">
+              <label>المستخدم (اسم المستخدم أو الرقم)</label>
+              <input class="input" id="sub-user" placeholder="username أو 12" />
+            </div>
+            <div class="field">
+              <label>الخطة</label>
+              <select class="select" id="sub-plan">
+                ${plans.map(p => `<option value="${esc(p.id)}">${esc(p.name_ar)} — ${formatNum(p.price_sar)} ريال / ${p.days} يوم</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>ملاحظة (اختياري)</label>
+            <input class="input" id="sub-note" placeholder="رقم التحويل أو المرجع" />
+          </div>
+          <button class="btn btn-primary" id="sub-grant">تفعيل الاشتراك</button>
+        </div>
+
+        <div>
+          <h4 class="small" style="margin:0 0 8px">خطط الاشتراك</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>الخطة</th><th>السعر</th><th>المدة</th></tr></thead>
+            <tbody>${plans.map(p => `<tr>
+              <td><b>${esc(p.name_ar)}</b><div class="small muted">${esc(p.name_en || '')}</div></td>
+              <td style="color:var(--gold)">${formatNum(p.price_sar)} ريال</td>
+              <td>${p.days} يوم</td>
+            </tr>`).join('')}</tbody>
+          </table></div>
+        </div>
+      </div>
+    </details>`;
 
   view.querySelector('#sub-grant').addEventListener('click', async e => {
     const btn = e.currentTarget;
