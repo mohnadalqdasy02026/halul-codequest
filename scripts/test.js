@@ -338,6 +338,8 @@ async function main() {
     includes(adminSrc, 'data-reject=', 'زر الرفض موجود في كل طلب');
     const adminCssSrc = fs.readFileSync(path.join(ROOT, 'public', 'css', 'admin.css'), 'utf8');
     includes(adminCssSrc, '.sub-request', 'تنسيق بطاقات طلبات الاشتراك موجود');
+    gte((adminSrc.match(/state\.tab = TAB_KEYS\.includes\(hash\)/g) || []).length, 2,
+      'الدخول والجلسة الجاهزة يضبطان التبويب من الرابط ويوصلان أزراره');
   }
 
   /* ---------------------------------------------------------------- B. auth & security */

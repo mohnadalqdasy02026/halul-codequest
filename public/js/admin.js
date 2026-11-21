@@ -86,6 +86,9 @@ document.getElementById('gate-form').addEventListener('submit', async e => {
     document.getElementById('admin-user').textContent = `🛠️ ${res.user.profile?.display_name || res.user.username}`;
     gate.classList.add('hidden');
     shell.classList.remove('hidden');
+    const hash = (location.hash || '').replace(/^#\/?/, '');
+    state.tab = TAB_KEYS.includes(hash) ? hash : 'overview';
+    paintTabs();
     await renderTab();
     toast('مرحبًا بك في لوحة الإدارة', 'ok');
   } catch (err) {
